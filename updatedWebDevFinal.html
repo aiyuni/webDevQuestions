@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>Finals baby!</title>
+</head>
+<body>
+  <div id="q1">
+    
+  </div>
+  <script>
+  /*<![CDATA[*/
+  //********************************************************  
+  //**********************Q1 JavaScript*********************
+  //********************************************************
+  
+  var form = document.createElement("form");
+    
+  var user = document.createElement("input");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "username");
+    user.setAttribute("required", "required");
+    user.setAttribute("pattern", "[A-Za-z0-9]{2,14}");
+    form.appendChild(user);
+    
+  var age = document.createElement("input");
+    age.setAttribute("type", "number");
+    age.setAttribute("name", "age");
+    age.setAttribute("min", "18");
+    age.setAttribute("max", "99");
+    age.setAttribute("required", "required"); 
+    form.appendChild(age);
+    
+  var email = document.createElement("input");
+    email.setAttribute("type", "email");
+    email.setAttribute("name", "email");
+    email.setAttribute("required", "required");
+    form.appendChild(email);
+    
+  var submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("name", "submit");
+    submit.setAttribute("value", "submit");
+    form.appendChild(submit);
+    
+    document.getElementById("q1").appendChild(form);
+    
+  
+  //*******************************************************
+  //************************Q2 jQuery AJAX*****************
+  //*******************************************************
+
+  //This part is given. Only need to know from Code starts to Code ends.
+  $(document).ready(function() {  
+    $('#getList').click(function(e) {
+      e.preventDefault();
+      
+      $.ajax({
+        url: "ajax.get.php",
+        dataType: "json",
+        type: "GET",
+        success: function(data) {
+          /////////////////
+          // Code starts //
+          /////////////////
+          var customers = data['customers'];
+          
+          var listData = "<table><tr><th>Name</th><th>ID</th><th>Age</th><th>Email</th></tr>";
+        
+          for(var i in customers) {
+            var customer = customers[i];
+            listData += "<tr><td>" + customer['name'] + "</td><td>" + customer['id'] + "</td><td>" + customer['age'] + "</td><td>" + customer['email'] + "</td></tr>";
+            }
+          
+          listData += "</table>";
+          $("#jsonTable").append(listData);
+          ///////////////
+          // Code ends //
+          ///////////////
+        },
+        error:function(jqXHR, textStatus, errorThrown) {
+          $("#p1").text(jqXHR.statusText);
+        }
+      });
+    });
+  });
+    //********************************************************
+    //********************Q3  SQL*****************************
+    //********************************************************
+    CREATE TABLE user (
+      ID int NOT NULL AUTO_INCREMENT,
+      first_name VARCHAR(30),
+      last_name VARCHAR(30),
+      email_address VARCHAR(30),
+      PRIMARY KEY (ID)
+    );
+  
+    INSERT INTO user (first_name, last_name, email_address) VALUES ('kelvin', 'lee', 'kelvinlee@hotmail.ca');
+    
+    SELECT * FROM user;
+    //********************************************************
+    //********************Q4  PHP*****************************
+    //********************************************************
+    
+    // This can be done multiple ways but I found this way to be simple.
+    echo "<table><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th></tr>";
+    while($row = $statement->fetchObject()) {
+      echo "<tr><td>" . $row->ID . "</td><td>" . $row->first_name . "</td><td>" . $row->last_name . "</td><td>" . $row->email_address . "</td></tr>";
+      }
+      echo "</table>";
+    }
+    
+    //********************************************************
+    //********************Q5  PHP*****************************
+    //********************************************************
+    function total($value1, $value2) {
+      if (is_numeric($value1) && is_numeric($value2)) {
+        return $value1 + $value2;
+      } else {
+        return null;
+      }
+    }
+  //********************************************************
+  //********************************************************
+  //********************************************************
+  
+  </script>
+</body>
+</html>
